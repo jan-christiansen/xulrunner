@@ -13,7 +13,6 @@ ID
 .*.sw[a-z]
 
 # User files that may appear at the root
-/.mozconfig*
 /mozconfig
 /configure
 /config.cache

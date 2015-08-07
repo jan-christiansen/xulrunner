@@ -1,0 +1,16 @@
+mk_add_options MOZ_CO_PROJECT=xulrunner
+mk_add_options MOZ_OBJDIR=@TOPSRCDIR@/obj-xul-mac-res
+mk_add_options MOZ_MAKE_FLAGS="-s -j4"
+mk_add_options AUTOCONF=/usr/local/Cellar/autoconf213/2.13/bin/autoconf213
+
+ac_add_options --disable-tests
+ac_add_options --disable-crashreporter
+ac_add_options --disable-installer
+ac_add_options --enable-application=xulrunner
+ac_add_options --with-macos-sdk=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.10.sdk
+
+RANLIB=ranlib
+AR=ar
+AS=$CC
+LD=ld
+STRIP="strip"
