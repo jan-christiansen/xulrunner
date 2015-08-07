@@ -4348,7 +4348,7 @@ class _GenerateProtocolActorCode(ipdl.ast.Visitor):
 
         ## Write([const] PFoo* var)
         write = MethodDefn(self.writeMethodDecl(intype, var))
-        nullablevar = ExprVar('__nullable')
+        nullablevar = ExprVar('nullable__')
         write.decl.params.append(Decl(Type.BOOL, nullablevar.name))
         # id_t id;
         # if (!var)
