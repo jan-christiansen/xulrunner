@@ -288,6 +288,8 @@ enum {
 
   NSOpenGLContext *mGLContext;
 
+  NSTrackingArea *trackingArea;
+
   // Simple gestures support
   //
   // mGestureState is used to detect when Cocoa has called both

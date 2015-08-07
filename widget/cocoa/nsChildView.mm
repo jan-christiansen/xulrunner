@@ -1383,7 +1383,7 @@ nsresult nsChildView::SynthesizeNativeMouseEvent(nsIntPoint aPoint,
   NSPoint screenPoint = NSMakePoint(pt.x, nsCocoaUtils::FlippedScreenY(pt.y));
   NSPoint windowPoint = [[mView window] convertScreenToBase:screenPoint];
 
-  NSEvent* event = [NSEvent mouseEventWithType:aNativeMessage
+  NSEvent* event = [NSEvent mouseEventWithType:(NSEventType)aNativeMessage
                                       location:windowPoint
                                  modifierFlags:aModifierFlags
                                      timestamp:[NSDate timeIntervalSinceReferenceDate]
@@ -3069,10 +3069,46 @@ NSEvent* gLastDragMouseDownEvent = nil;
   NS_OBJC_END_TRY_ABORT_BLOCK;
 }
 
+-(void)updateTrackingAreas
+{
+    if(trackingArea != nil) {
+        [self removeTrackingArea:trackingArea];
+        [trackingArea release];
+    }
+
+    int opts = ( NSTrackingMouseMoved | NSTrackingMouseEnteredAndExited | NSTrackingActiveAlways);
+    trackingArea = [ [NSTrackingArea alloc] initWithRect:[self bounds]
+                                                 options:opts
+                                                   owner:self
+                                                userInfo:nil];
+
+    [self addTrackingArea:trackingArea];
+
+}
+
+-(void)mouseExited:(NSEvent *)theEvent
+{
+}
+
+-(void)mouseEntered:(NSEvent *)theEvent
+{
+}
+
+-(void)mouseMoved:(NSEvent *)theEvent
+{
+    [self handleMouseMoved:theEvent];
+}
+
+- (void)cursorUpdated:(NSEvent*)aEvent
+{
+    // Nothing to do here, but NSTrackingArea wants us to implement this method.
+}
+
 - (void)dealloc
 {
   NS_OBJC_BEGIN_TRY_ABORT_BLOCK;
 
+  [trackingArea release];
   [mGLContext release];
   [mPendingDirtyRects release];
   [mLastMouseDownEvent release];
